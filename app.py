@@ -137,21 +137,52 @@ if st.button("▶ Run Ahad Code"):
 
 
         # =========================
-        # STORE
-        # =========================
+# STORE COMMAND
+# =========================
 
-        if line.startswith("store"):
+if line.startswith("store"):
 
-            line = line.replace("store", "").strip()
+    line = line.replace("store", "").strip()
 
-            parts = line.split("=")
+    parts = line.split("=")
 
-            var_name = parts[0].strip()
+    var_name = parts[0].strip()
 
-            value = eval(parts[1].strip(), {}, variables)
+    value_part = "=".join(parts[1:]).strip()
 
-            variables[var_name] = value
 
+
+    # =========================
+    # ADD FUNCTION
+    # =========================
+
+    if value_part.startswith("add"):
+
+        content = value_part[4:-1]
+
+        nums = content.split(",")
+
+        a = eval(nums[0].strip(), {}, variables)
+
+        b = eval(nums[1].strip(), {}, variables)
+
+        value = a + b
+
+
+
+    else:
+
+        try:
+
+            value = eval(value_part, {}, variables)
+
+        except:
+
+            value = value_part
+
+
+
+    variables[var_name] = value
 
 
         # =========================
